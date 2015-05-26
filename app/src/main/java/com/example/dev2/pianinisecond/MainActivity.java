@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.dev2.pianinisecond.edit.FileLog;
+import com.example.dev2.pianinisecond.play_sound.PlaySound;
 import com.example.dev2.pianinisecond.statik_value.StaticValue;
 
 import java.io.*;
@@ -24,7 +25,7 @@ public class MainActivity extends Activity {
     private Button btLa;
     private Button btSi;
     private TextView textView;
-    private File file;
+    private PlaySound playSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,31 +43,44 @@ public class MainActivity extends Activity {
     }
 
     public void clicOnButton(View view) {
+//        playSound = new PlaySound();
         switch (view.getId()) {
             case R.id.btDo:
                 addInfoToFile("До");
+                new PlaySound(1);
                 break;
             case R.id.btRe:
                 addInfoToFile("Ре");
+                new PlaySound(2);
                 break;
             case R.id.btMi:
                 addInfoToFile("Ми");
+                new PlaySound(3);
                 break;
             case R.id.btFa:
                 addInfoToFile("Фа");
+                new PlaySound(4);
                 break;
             case R.id.btSol:
                 addInfoToFile("Соль");
+                new PlaySound(5);
                 break;
             case R.id.btLa:
                 addInfoToFile("Ля");
+                new PlaySound(6);
                 break;
             case R.id.btSi:
                 addInfoToFile("Си");
+                new PlaySound(7);
                 break;
         }
     }
     // Метод для открытия файла
+
+//    private void readFile() {
+//
+//    }
+
     private void addInfoToFile(String text) {
         textView.setText("");
         List<FileLog> fileList = new ArrayList<>();

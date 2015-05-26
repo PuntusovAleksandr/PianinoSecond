@@ -34,6 +34,6 @@ public class FileLog implements Serializable {
 
     @Override
     public String toString() {
-        return "# ::: " + new SimpleDateFormat("dd.MM.yyyy : hh.mm.ss").format(date) + " note is: " + text+"\n";
+        return "::: " + new SimpleDateFormat("dd.MM.yyyy : hh.mm.ss").format(date) + " note is: " + text+"\n";
     }
 }
