@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Pianino</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="Do">Do</string>
+    <string name="Re">Re</string>
+    <string name="Mi">Mi</string>
+    <string name="Fa">Fa</string>
+    <string name="Sol">Sol</string>
+    <string name="La">La</string>
+    <string name="Si">Si</string>
+</resources>
