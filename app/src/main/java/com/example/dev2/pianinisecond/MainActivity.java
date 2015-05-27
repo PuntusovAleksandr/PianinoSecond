@@ -1,12 +1,17 @@
 package com.example.dev2.pianinisecond;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.dev2.pianinisecond.edit.FileLog;
 import com.example.dev2.pianinisecond.play_sound.PlaySound;
@@ -28,6 +33,9 @@ public class MainActivity extends Activity {
     private Button btLa;
     private Button btSi;
     private TextView textView;
+    private TextView bigTextView;
+    private LinearLayout ll_3;
+    private LinearLayout ll_head;
     private PlaySound playSound;
 
     @Override
@@ -43,12 +51,43 @@ public class MainActivity extends Activity {
         btLa = (Button) findViewById(R.id.btLa);
         btSi = (Button) findViewById(R.id.btSi);
         textView = (TextView) findViewById(R.id.textView);
+        bigTextView = (TextView) findViewById(R.id.bif_text_yiew);
+        ll_3 = (LinearLayout) findViewById(R.id.ll_3);
+        ll_head = (LinearLayout) findViewById(R.id.ll_head);
+
+        bigTextView.setMovementMethod(new ScrollingMovementMethod());   // включаем скролинг
+
+        textView.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override // "слушатель" организован в виде анонимного внутреннего класса
+            public boolean onLongClick(View arg0) // действия на нажатие
+            {
+                bigTextView.setText(textView.getText().toString());
+                ll_3.setVerticalGravity(1);
+                bigTextView.setVisibility(View.VISIBLE);
+                bigTextView.setBackgroundColor(Color.BLACK);
+                bigTextView.setTextColor(Color.WHITE);
+
+                return true;
+            }
+        });
+        bigTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override // "слушатель" организован в виде анонимного внутреннего класса
+            public boolean onLongClick(View arg0) // действия на нажатие
+            {
+                bigTextView.setText("");
+                ll_3.setVerticalGravity(0);
+                bigTextView.setVisibility(View.INVISIBLE);
+                bigTextView.setBackgroundColor(Color.BLACK);
+                bigTextView.setTextColor(Color.WHITE);
+                return true;
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
 
         List<FileLog> fileList = new ArrayList<>();
         File file = new File(getFilesDir(), StaticValue.FILE_NAME);
@@ -57,12 +96,10 @@ public class MainActivity extends Activity {
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());
         }
-
     }
 
     public void clicOnButton(View view) {
         PlaySound playSound;
-
         switch (view.getId()) {
             case R.id.btDo:
                 addInfoToFile("До");
@@ -121,7 +158,6 @@ public class MainActivity extends Activity {
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());
         }
-
     }
 }
 
