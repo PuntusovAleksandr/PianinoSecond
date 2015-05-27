@@ -44,6 +44,20 @@ public class MainActivity extends Activity {
         textView = (TextView) findViewById(R.id.textView);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        List<FileLog> fileList = new ArrayList<>();
+        File file = new File(getFilesDir(), StaticValue.FILE_NAME);
+        ReadWrite readWrite = new ReadWrite();
+        fileList = readWrite.readFile(file);
+        for (FileLog fileLog : fileList) {
+            textView.append(fileLog.toString());
+        }
+
+    }
+
     public void clicOnButton(View view) {
         switch (view.getId()) {
             case R.id.btDo:
@@ -77,140 +91,27 @@ public class MainActivity extends Activity {
         }
     }
 
-//    Handler handler = new Handler();
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        // Use a new tread as this can take a while
-//        final Thread thread = new Thread(new Runnable() {
-//            public void run() {
-//                new PlaySound(handler).genTone();
-//                handler.post(new Runnable() {
-//
-//                    public void run() {
-//                        new PlaySound(handler).playSound();
-//                    }
-//                });
-//            }
-//        });
-//        thread.start();
-//    }
-
     private void addInfoToFile(String text) {
 
         textView.setText("");
         List<FileLog> fileList = new ArrayList<>();
         File file = new File(getFilesDir(), StaticValue.FILE_NAME);
 
-//        FileInputStream fis = null;
-//        ObjectInputStream inObject=null;
-
         ReadWrite readWrite = new ReadWrite();
         fileList = readWrite.readFile(file);
-
-
-//        try {
-//            fis = new FileInputStream(file);
-//            inObject = new ObjectInputStream(fis);
-//            fileList = (List<FileLog>) inObject.readObject();
-//            inObject.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error FileInputStream " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 1 " + e.toString());
-//        } catch (OptionalDataException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 2 " + e.toString());
-//        } catch (StreamCorruptedException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 3 " + e.toString());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 4 " + e.toString());
-//        }
 
         fileList.add(new FileLog(text));
         if (fileList.size() >= 20) {
             fileList.remove(0);
         }
 
-
         readWrite.write(file, fileList);
-
-
-//        FileOutputStream fos = null;
-//        ObjectOutputStream outObject = null;
-//
-//        try {
-//            fos = new FileOutputStream(file);
-//            outObject = new ObjectOutputStream(fos);
-//            outObject.writeObject(fileList);
-//            outObject.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error FileOutputStream " + e.toString());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectOutputStream " + e.toString());
-//        }
 
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());
         }
 
-
-
-//        //проверочные действия работы
-//        Date date = new Date();
-//        String dateString = new SimpleDateFormat("dd.MM.yyyy : hh.mm.ss").format(date);
-//        textView.append( dateString + " " + " : "+text+"\n");
-
-//        fileLogArrayList = new ArrayList<FileLog>();
-//        fileLog = new FileLog(text);
-//        fileLogArrayList.add(fileLog);
-//
-//        Log.i(StaticValue.MY_LOG, "Size 1 _________" + fileLogArrayList.size());
-//
-//        if (fileLogArrayList.size() >= 5) fileLogArrayList.remove(0);
-//        Log.i(StaticValue.MY_LOG, "Select button " + text);
-//
-//        Log.i(StaticValue.MY_LOG, "Size " + fileLogArrayList.size());
-//
-//        try {
-//            outputStream = openFileOutput(StaticValue.FILE_NAME, 0);
-//            objectOutputStreamt = new ObjectOutputStream(outputStream);
-//            objectOutputStreamt.writeObject(fileLogArrayList);
-//            Log.i(StaticValue.MY_LOG, "File created and saved ");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error openFileOutput " + e.toString());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Error ObjectOutputStream " + e.toString());
-//        }
-//
-//
-//        try {
-//            inputStream = openFileInput(StaticValue.FILE_NAME);
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-//            fileLogArrayList = new ObjectInputStream(reader.readLine())
-//            textView.append(reader.readLine());
-////            objectInputStream =
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Eror open file  ");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i(StaticValue.MY_LOG, "Eror ObjectOutputStream  ");
-//        }
-//
-//
-////        for (FileLog fl : fileLogArrayList) {
-////            textView.append( fl.toString());
-        }
+    }
 }
 
 
