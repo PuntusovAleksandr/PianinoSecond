@@ -14,7 +14,7 @@ public class PlaySound {
 
 
     private final int duration = 1;                                 // секунжы звучания
-    private final int sampleRate = 44000;                           // количество точек
+    private final int sampleRate = 48000;                           // количество точек
     private final int numSamples = duration * sampleRate;           // количество точек за время
     private final double sample[] = new double[numSamples];         // размер массива
     private double freqOfTone = 0;                                  // hz
@@ -25,9 +25,6 @@ public class PlaySound {
 
     public PlaySound(Handler handler) {
         this.handler = handler;
-    }
-
-    public PlaySound() {
     }
 
     public PlaySound(double note) {
@@ -59,6 +56,7 @@ public class PlaySound {
     }
 
     public void playSound(){
+        genTone();
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,

@@ -97,9 +97,22 @@
                     android:id="@+id/textView"
                     android:autoText="false"
                     android:layout_weight="1"
-                    android:isScrollContainer="true"/>
+                    android:isScrollContainer="true"
+                    android:longClickable="true"/>
             </ScrollView>
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ll_3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/Bbif_text_yiew" />
+        </FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

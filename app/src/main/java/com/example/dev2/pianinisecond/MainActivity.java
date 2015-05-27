@@ -3,6 +3,7 @@ package com.example.dev2.pianinisecond;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+
         List<FileLog> fileList = new ArrayList<>();
         File file = new File(getFilesDir(), StaticValue.FILE_NAME);
         ReadWrite readWrite = new ReadWrite();
@@ -59,34 +61,43 @@ public class MainActivity extends Activity {
     }
 
     public void clicOnButton(View view) {
+        PlaySound playSound;
+
         switch (view.getId()) {
             case R.id.btDo:
                 addInfoToFile("До");
-                new PlaySound(261.63);
+                playSound = new PlaySound(261.63);
+                playSound.playSound();
                 break;
             case R.id.btRe:
                 addInfoToFile("Ре");
-                new PlaySound(293.66);
+                playSound = new PlaySound(293.66);
+                playSound.playSound();
                 break;
             case R.id.btMi:
                 addInfoToFile("Ми");
-                new PlaySound(329.63);
+                playSound = new PlaySound(329.63);
+                playSound.playSound();
                 break;
             case R.id.btFa:
                 addInfoToFile("Фа");
-                new PlaySound(349.23);
+                playSound = new PlaySound(349.23);
+                playSound.playSound();
                 break;
             case R.id.btSol:
                 addInfoToFile("Соль");
-                new PlaySound(392.00);
+                playSound = new PlaySound(392.00);
+                playSound.playSound();
                 break;
             case R.id.btLa:
                 addInfoToFile("Ля");
-                new PlaySound(440.00);
+                playSound = new PlaySound(440.00);
+                playSound.playSound();
                 break;
             case R.id.btSi:
                 addInfoToFile("Си");
-                new PlaySound(493.88);
+                playSound = new PlaySound(493.88);
+                playSound.playSound();
                 break;
         }
     }
