@@ -2,12 +2,14 @@ package com.example.dev2.pianinisecond;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.dev2.pianinisecond.edit.FileLog;
 import com.example.dev2.pianinisecond.play_sound.PlaySound;
+import com.example.dev2.pianinisecond.read_write.ReadWrite;
 import com.example.dev2.pianinisecond.statik_value.StaticValue;
 
 import java.io.*;
@@ -43,92 +45,117 @@ public class MainActivity extends Activity {
     }
 
     public void clicOnButton(View view) {
-//        playSound = new PlaySound();
         switch (view.getId()) {
             case R.id.btDo:
                 addInfoToFile("До");
-                new PlaySound(1);
+                new PlaySound(261.63);
                 break;
             case R.id.btRe:
                 addInfoToFile("Ре");
-                new PlaySound(2);
+                new PlaySound(293.66);
                 break;
             case R.id.btMi:
                 addInfoToFile("Ми");
-                new PlaySound(3);
+                new PlaySound(329.63);
                 break;
             case R.id.btFa:
                 addInfoToFile("Фа");
-                new PlaySound(4);
+                new PlaySound(349.23);
                 break;
             case R.id.btSol:
                 addInfoToFile("Соль");
-                new PlaySound(5);
+                new PlaySound(392.00);
                 break;
             case R.id.btLa:
                 addInfoToFile("Ля");
-                new PlaySound(6);
+                new PlaySound(440.00);
                 break;
             case R.id.btSi:
                 addInfoToFile("Си");
-                new PlaySound(7);
+                new PlaySound(493.88);
                 break;
         }
     }
-    // Метод для открытия файла
 
-//    private void readFile() {
+//    Handler handler = new Handler();
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
 //
+//        // Use a new tread as this can take a while
+//        final Thread thread = new Thread(new Runnable() {
+//            public void run() {
+//                new PlaySound(handler).genTone();
+//                handler.post(new Runnable() {
+//
+//                    public void run() {
+//                        new PlaySound(handler).playSound();
+//                    }
+//                });
+//            }
+//        });
+//        thread.start();
 //    }
 
     private void addInfoToFile(String text) {
+
         textView.setText("");
         List<FileLog> fileList = new ArrayList<>();
         File file = new File(getFilesDir(), StaticValue.FILE_NAME);
-        FileInputStream fis = null;
-        ObjectInputStream inObject=null;
-        try {
-            fis = new FileInputStream(file);
-            inObject = new ObjectInputStream(fis);
-            fileList = (List<FileLog>) inObject.readObject();
-            inObject.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error FileInputStream " + e.toString());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 1 " + e.toString());
-        } catch (OptionalDataException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 2 " + e.toString());
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 3 " + e.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 4 " + e.toString());
-        }
+
+//        FileInputStream fis = null;
+//        ObjectInputStream inObject=null;
+
+        ReadWrite readWrite = new ReadWrite();
+        fileList = readWrite.readFile(file);
+
+
+//        try {
+//            fis = new FileInputStream(file);
+//            inObject = new ObjectInputStream(fis);
+//            fileList = (List<FileLog>) inObject.readObject();
+//            inObject.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error FileInputStream " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 1 " + e.toString());
+//        } catch (OptionalDataException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 2 " + e.toString());
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 3 " + e.toString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error ObjectInputStream 4 " + e.toString());
+//        }
 
         fileList.add(new FileLog(text));
         if (fileList.size() >= 20) {
             fileList.remove(0);
         }
 
-        FileOutputStream fos = null;
-        ObjectOutputStream outObject = null;
 
-        try {
-            fos = new FileOutputStream(file);
-            outObject = new ObjectOutputStream(fos);
-            outObject.writeObject(fileList);
-            outObject.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error FileOutputStream " + e.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i(StaticValue.MY_LOG, "Error ObjectOutputStream " + e.toString());
-        }
+        readWrite.write(file, fileList);
+
+
+//        FileOutputStream fos = null;
+//        ObjectOutputStream outObject = null;
+//
+//        try {
+//            fos = new FileOutputStream(file);
+//            outObject = new ObjectOutputStream(fos);
+//            outObject.writeObject(fileList);
+//            outObject.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error FileOutputStream " + e.toString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.i(StaticValue.MY_LOG, "Error ObjectOutputStream " + e.toString());
+//        }
 
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());
