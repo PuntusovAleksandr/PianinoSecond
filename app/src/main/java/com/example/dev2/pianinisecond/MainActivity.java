@@ -40,7 +40,10 @@ public class MainActivity extends Activity {
     private LinearLayout ll_head;
     private PlaySound playSound;
 
-
+    /**
+     * Один из циклов
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
