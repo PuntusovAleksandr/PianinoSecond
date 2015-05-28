@@ -22,7 +22,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author AleksandrP
+ */
 public class MainActivity extends Activity {
 
     private Button btDo;
@@ -38,11 +40,14 @@ public class MainActivity extends Activity {
     private LinearLayout ll_head;
     private PlaySound playSound;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        /**
+         * @value инициализация всех View элементов на текущем активити
+         */
         btDo = (Button) findViewById(R.id.btDo);
         btRe = (Button) findViewById(R.id.btRe);
         btMi = (Button) findViewById(R.id.btMi);
@@ -57,104 +62,146 @@ public class MainActivity extends Activity {
 
         bigTextView.setMovementMethod(new ScrollingMovementMethod());   // включаем скролинг
 
+        /**
+         * меттод слушатель, который позволяет открвъыть окно логов на полный экран
+         */
         textView.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override // "слушатель" организован в виде анонимного внутреннего класса
             public boolean onLongClick(View arg0) // действия на нажатие
             {
-                bigTextView.setText(textView.getText().toString());
-                ll_3.setVerticalGravity(1);
-                bigTextView.setVisibility(View.VISIBLE);
-                bigTextView.setBackgroundColor(Color.BLACK);
-                bigTextView.setTextColor(Color.WHITE);
+                bigTextView.setText(textView.getText().toString()); // присваивается текст из имеющегося на экране
+                ll_3.setVerticalGravity(1); // устновка размеа на максимальную высоту
+                bigTextView.setVisibility(View.VISIBLE); // установка визуализации
+                bigTextView.setBackgroundColor(Color.BLACK);    // присвоение черного фона
+                bigTextView.setTextColor(Color.WHITE);  // присвоение белых кнопок
 
                 return true;
             }
         });
+        /**
+         * меттод слушатель, который возвращает окно в нормальный вид
+         */
         bigTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override // "слушатель" организован в виде анонимного внутреннего класса
             public boolean onLongClick(View arg0) // действия на нажатие
             {
-                bigTextView.setText("");
-                ll_3.setVerticalGravity(0);
-                bigTextView.setVisibility(View.INVISIBLE);
-                bigTextView.setBackgroundColor(Color.BLACK);
-                bigTextView.setTextColor(Color.WHITE);
+                bigTextView.setText("");    // установка пустого текста в bigTextView
+                ll_3.setVerticalGravity(0); // установка вертикального размера в нуль
+                bigTextView.setVisibility(View.INVISIBLE);  // гасим показ
+                bigTextView.setBackgroundColor(Color.BLACK);    // установа белого фона bigTextView
+                bigTextView.setTextColor(Color.WHITE);  // установка текса в белый цвет
                 return true;
             }
         });
     }
 
+    /**
+     * меетод, который в жизненном цикле выполняется всегда после Started
+     * (or metod Paused)
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
-        List<FileLog> fileList = new ArrayList<>();
-        File file = new File(getFilesDir(), StaticValue.FILE_NAME);
-        ReadWrite readWrite = new ReadWrite();
-        fileList = readWrite.readFile(file);
+        List<FileLog> fileList = new ArrayList<>();     // создание списка FileLog
+        File file = new File(getFilesDir(), StaticValue.FILE_NAME); // file - name file in the internal memory
+        ReadWrite readWrite = new ReadWrite();  // создание объекта класса ReadWrite
+        fileList = readWrite.readFile(file);    // получение списка fileList для отображения его на экране при запуске приложения
         for (FileLog fileLog : fileList) {
-            textView.append(fileLog.toString());
+            textView.append(fileLog.toString());    // добавление элементов на экран в textView
         }
     }
 
+    /**
+     * Метод, который слушает нажатие кнопок
+     * @param view - текущий view
+     */
     public void clicOnButton(View view) {
+        // создание объекта класса PlaySound
         PlaySound playSound;
         switch (view.getId()) {
+            // Кнопка "До"
             case R.id.btDo:
                 addInfoToFile("До");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(261.63);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Ре"
             case R.id.btRe:
                 addInfoToFile("Ре");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(293.66);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Ми"
             case R.id.btMi:
                 addInfoToFile("Ми");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(329.63);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Фа"
             case R.id.btFa:
                 addInfoToFile("Фа");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(349.23);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Соль"
             case R.id.btSol:
                 addInfoToFile("Соль");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(392.00);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Ля"
             case R.id.btLa:
                 addInfoToFile("Ля");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(440.00);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
+            // Кнопка "Си"
             case R.id.btSi:
                 addInfoToFile("Си");
+                // передаем в конструктор PlaySound значение частоты ноты
                 playSound = new PlaySound(493.88);
+                // запуск потока воспроизведения ноты при нажатии на кнопку
                 playSound.playSound();
                 break;
         }
     }
 
+    /**
+     * Метод для записи данных в файл
+     * @param text file - name file in the internal memory
+     */
     private void addInfoToFile(String text) {
-
+        // установка textView в пустую строку (сбрасывание предыдущего вида)
         textView.setText("");
-        List<FileLog> fileList = new ArrayList<>();
-        File file = new File(getFilesDir(), StaticValue.FILE_NAME);
+        List<FileLog> fileList = new ArrayList<>(); // создание списка FileLog
+        File file = new File(getFilesDir(), StaticValue.FILE_NAME); // file - name file in the internal memory
 
-        ReadWrite readWrite = new ReadWrite();
-        fileList = readWrite.readFile(file);
+        ReadWrite readWrite = new ReadWrite();  // создание объекта класса ReadWrite
+        fileList = readWrite.readFile(file);// получение списка fileList для отображения его на экране при запуске приложения
 
+        // проверка количества содержимого и удаление не нужного
         fileList.add(new FileLog(text));
         if (fileList.size() >= 20) {
             fileList.remove(0);
         }
 
+        // запись данных в файл
         readWrite.write(file, fileList);
-
+        // чтение и визуализация данных на экране
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());
         }
@@ -163,6 +210,7 @@ public class MainActivity extends Activity {
 
 
 /**
+ * Источники:
  *  http://developer.alexanderklimov.ru/android/texteditor.php
  *  http://developer-android.unlimited-translate.org/training/basics/data-storage/files.html#GetWritePermission
  *  http://microsin.net/programming/android/saving-files.html

@@ -18,19 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dev2 on 27.05.15.
+ *@author AleksandrP
  */
 public class ReadWrite {
 
-
+    /**
+     *
+     * @param file - name file in the internal memory
+     * @return collection classes FileLog
+     */
     public List<FileLog> readFile(File file) {
+        // создаем коллекцию обьектов классов FileLog
         List<FileLog> fileList = new ArrayList<>();
         FileInputStream fis = null;
         ObjectInputStream inObject=null;
         try {
+            // созданиеи и инициализация потока FileInputStream
             fis = new FileInputStream(file);
+            // создание и инициализация потока ObjectInputStream
             inObject = new ObjectInputStream(fis);
+            // список FileLog
             fileList = (List<FileLog>) inObject.readObject();
+            // закрытие потока FileInputStream
             inObject.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -51,14 +60,23 @@ public class ReadWrite {
         return fileList;
     }
 
+    /**
+     *
+     * @param file - name file in the internal memory
+     * @param fileList - collection FileLog
+     */
     public void write(File file, List<FileLog> fileList) {
         FileOutputStream fos = null;
         ObjectOutputStream outObject = null;
 
         try {
+            // создание и инициализация потока вывода
             fos = new FileOutputStream(file);
+            // создание и инициализация потока ObjectOutputStream
             outObject = new ObjectOutputStream(fos);
+            // запись потока ObjectOutputStream
             outObject.writeObject(fileList);
+            // закрытие потока ObjectOutputStream
             outObject.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

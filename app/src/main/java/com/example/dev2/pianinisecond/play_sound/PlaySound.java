@@ -8,7 +8,9 @@ import android.util.Log;
 import com.example.dev2.pianinisecond.statik_value.StaticValue;
 
 /**
- * Created by Aleksandr on 26.05.2015.
+ * @author  AleksandrP on 26.05.2015.
+ *
+ * Этот класс для создания музыкальых потоков при нажатиии на клавиши
  */
 public class PlaySound {
 
@@ -21,20 +23,18 @@ public class PlaySound {
 
     private final byte generatedSnd[] = new byte[2 * numSamples];   // размер байтового массива
 
-    Handler handler = new Handler();
+    /**
+     *
+     * @param note - частота ноты. в данном случае все ноты для первой октавы
+     */
 
-    public PlaySound(Handler handler) {
-        this.handler = handler;
-    }
-
-    public PlaySound(double note) {
+    public PlaySound(double note) {                                 // конструктор принимающий на вход частоту ноты
         this.freqOfTone = note;
     }
+
     // можно сделать в отдельном методе
     // convert to 16 bit pcm sound array
     // assumes the sample buffer is normalized.
-
-
 
     public void genTone(){
         // fill out the array
@@ -55,13 +55,22 @@ public class PlaySound {
         }
     }
 
+    /**
+     * Метод, запускающий звуковой поток
+     */
     public void playSound(){
         genTone();
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
                 AudioTrack.MODE_STATIC);
+        /**
+         * metod write - saving data for play
+         */
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
+        /**
+         * metod play - player data savig metod write
+         */
         audioTrack.play();
     }
 
