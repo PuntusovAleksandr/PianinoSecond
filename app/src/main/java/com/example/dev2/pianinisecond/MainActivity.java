@@ -19,7 +19,9 @@ import com.example.dev2.pianinisecond.read_write.ReadWrite;
 import com.example.dev2.pianinisecond.statik_value.StaticValue;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class MainActivity extends Activity implements StaticValue {
         btRe = (Button) findViewById(R.id.btRe);
         btMi = (Button) findViewById(R.id.btMi);
         btFa = (Button) findViewById(R.id.btFa);
-        btSol = (Button) findViewById(R.id.btSol);
+        btSol =(Button) findViewById(R.id.btSol);
         btLa = (Button) findViewById(R.id.btLa);
         btSi = (Button) findViewById(R.id.btSi);
         textView = (TextView) findViewById(R.id.textView);
@@ -98,6 +100,8 @@ public class MainActivity extends Activity implements StaticValue {
                 return true;
             }
         });
+
+        addInfoToFile("\n"+new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
     }
 
     /**
@@ -114,6 +118,8 @@ public class MainActivity extends Activity implements StaticValue {
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());    // добавление элементов на экран в textView
         }
+//        textView.append();
+//        new SimpleDateFormat("dd.MM.yyyy : hh.mm.ss").format(date)
     }
 
     /**
@@ -195,8 +201,11 @@ public class MainActivity extends Activity implements StaticValue {
         ReadWrite readWrite = new ReadWrite();  // создание объекта класса ReadWrite
         fileList = readWrite.readFile();// получение списка fileList для отображения его на экране при запуске приложения
 
+        String textToFile = "::: " + new SimpleDateFormat("hh.mm.ss").format(new Date()) + "\t"+ text;
+
+
         // проверка количества содержимого и удаление не нужного
-        fileList.add(new FileLog(text));
+        fileList.add(new FileLog(textToFile));
         if (fileList.size() >= 20) {
             fileList.remove(0);
         }
