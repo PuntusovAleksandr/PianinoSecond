@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
         ll_head = (LinearLayout) findViewById(R.id.ll_head);
 
         bigTextView.setMovementMethod(new ScrollingMovementMethod());   // включаем скролинг
+        textView.setMovementMethod(new ScrollingMovementMethod());   // включаем скролинг
 
         /**
          * меттод слушатель, который позволяет открвъыть окно логов на полный экран

@@ -84,23 +84,16 @@
             android:layout_weight="1"
             android:id="@+id/ll_2">
 
-            <ScrollView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scrollView"
-                android:layout_weight="1">
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView"
+                android:autoText="false"
+                android:isScrollContainer="true"
+                android:gravity="bottom"
+                android:longClickable="true"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView"
-                    android:autoText="false"
-                    android:layout_weight="1"
-                    android:isScrollContainer="true"
-                    android:gravity="bottom"
-                    android:longClickable="true"/>
-            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
