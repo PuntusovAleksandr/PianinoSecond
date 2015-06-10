@@ -10,6 +10,7 @@ import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,6 +83,9 @@ public class MainActivity extends Activity implements StaticValue {
                 bigTextView.setBackgroundColor(Color.BLACK);    // присвоение черного фона
                 bigTextView.setTextColor(Color.WHITE);  // присвоение белых кнопок
 
+                LinearLayout.LayoutParams llParamd = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ll_3.setLayoutParams(llParamd);
+
                 return true;
             }
         });
@@ -97,11 +101,14 @@ public class MainActivity extends Activity implements StaticValue {
                 bigTextView.setVisibility(View.INVISIBLE);  // гасим показ
                 bigTextView.setBackgroundColor(Color.BLACK);    // установа белого фона bigTextView
                 bigTextView.setTextColor(Color.WHITE);  // установка текса в белый цвет
+
+                LinearLayout.LayoutParams llParamd = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ll_3.setLayoutParams(llParamd);
                 return true;
             }
         });
 
-        addInfoToFile("\n"+new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        addInfoToFile("\n" + new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
     }
 
     /**
@@ -206,7 +213,7 @@ public class MainActivity extends Activity implements StaticValue {
 
         // проверка количества содержимого и удаление не нужного
         fileList.add(new FileLog(textToFile));
-        if (fileList.size() >= 20) {
+        if (fileList.size() >= 200) {
             fileList.remove(0);
         }
 
