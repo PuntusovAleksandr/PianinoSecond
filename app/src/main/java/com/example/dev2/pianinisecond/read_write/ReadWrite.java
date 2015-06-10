@@ -1,5 +1,6 @@
 package com.example.dev2.pianinisecond.read_write;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.dev2.pianinisecond.edit.FileLog;
@@ -20,14 +21,29 @@ import java.util.List;
 /**
  *@author AleksandrP
  */
-public class ReadWrite {
+public class ReadWrite implements StaticValue {
+
+
 
     /**
      *
-     * @param file - name file in the internal memory
      * @return collection classes FileLog
      */
-    public List<FileLog> readFile(File file) {
+    public List<FileLog> readFile() {
+
+        // проверяем доступность SD
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            Log.d(MY_LOG, "SD-карта не доступна: " + Environment.getExternalStorageState());
+        }
+        // получаем путь к SD
+        File sdPath = Environment.getExternalStorageDirectory();
+        // добавляем свой каталог к пути
+        sdPath = new File(sdPath.getAbsolutePath() + "/" + DIR_SD);
+        // формируем объект File, который содержит путь к файлу
+        File file = new File(sdPath, FILENAME_SD);
+        Log.d(MY_LOG, "Путь к файлу : " +sdPath.toString());
+
         // создаем коллекцию обьектов классов FileLog
         List<FileLog> fileList = new ArrayList<>();
         FileInputStream fis = null;
@@ -62,16 +78,30 @@ public class ReadWrite {
 
     /**
      *
-     * @param file - name file in the internal memory
      * @param fileList - collection FileLog
      */
-    public void write(File file, List<FileLog> fileList) {
+    public void write(List<FileLog> fileList) {
         FileOutputStream fos = null;
         ObjectOutputStream outObject = null;
 
+        // проверяем доступность SD
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            Log.d(MY_LOG, "SD-карта не доступна: " + Environment.getExternalStorageState());
+            return;
+        }
+        // получаем путь к SD
+        File sdPath = Environment.getExternalStorageDirectory();
+        // добавляем свой каталог к пути
+        sdPath = new File(sdPath.getAbsolutePath() + "/" + DIR_SD);
+        // создаем каталог
+        sdPath.mkdirs();
+        // формируем объект File, который содержит путь к файлу
+        File sdFile = new File(sdPath, FILENAME_SD);
+
         try {
             // создание и инициализация потока вывода
-            fos = new FileOutputStream(file);
+            fos = new FileOutputStream(sdFile);
             // создание и инициализация потока ObjectOutputStream
             outObject = new ObjectOutputStream(fos);
             // запись потока ObjectOutputStream

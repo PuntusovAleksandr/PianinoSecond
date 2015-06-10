@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author AleksandrP
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements StaticValue {
 
     private Button btDo;
     private Button btRe;
@@ -109,9 +109,8 @@ public class MainActivity extends Activity {
         super.onResume();
 
         List<FileLog> fileList = new ArrayList<>();     // создание списка FileLog
-        File file = new File(getFilesDir(), StaticValue.FILE_NAME); // file - name file in the internal memory
         ReadWrite readWrite = new ReadWrite();  // создание объекта класса ReadWrite
-        fileList = readWrite.readFile(file);    // получение списка fileList для отображения его на экране при запуске приложения
+        fileList = readWrite.readFile();    // получение списка fileList для отображения его на экране при запуске приложения
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());    // добавление элементов на экран в textView
         }
@@ -192,10 +191,9 @@ public class MainActivity extends Activity {
         // установка textView в пустую строку (сбрасывание предыдущего вида)
         textView.setText("");
         List<FileLog> fileList = new ArrayList<>(); // создание списка FileLog
-        File file = new File(getFilesDir(), StaticValue.FILE_NAME); // file - name file in the internal memory
 
         ReadWrite readWrite = new ReadWrite();  // создание объекта класса ReadWrite
-        fileList = readWrite.readFile(file);// получение списка fileList для отображения его на экране при запуске приложения
+        fileList = readWrite.readFile();// получение списка fileList для отображения его на экране при запуске приложения
 
         // проверка количества содержимого и удаление не нужного
         fileList.add(new FileLog(text));
@@ -204,7 +202,7 @@ public class MainActivity extends Activity {
         }
 
         // запись данных в файл
-        readWrite.write(file, fileList);
+        readWrite.write(fileList);
         // чтение и визуализация данных на экране
         for (FileLog fileLog : fileList) {
             textView.append(fileLog.toString());

@@ -3,8 +3,8 @@ package com.example.dev2.pianinisecond.statik_value;
 /**
  * Created by Aleksandr on 25.05.2015.
  */
-public class StaticValue {
-    public static String FILE_NAME = "date.txt";
+public interface StaticValue {
     public static final String MY_LOG = "myLog";
-    public static final String MY_LOG_FOR_SOUND = "myLogForSound";
+    public static final String DIR_SD =  "folder_for_piano" ;
+    public static final String FILENAME_SD = "file_date.txt" ;
 }
