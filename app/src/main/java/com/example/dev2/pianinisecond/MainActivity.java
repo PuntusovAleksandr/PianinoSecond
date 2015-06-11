@@ -108,7 +108,14 @@ public class MainActivity extends Activity implements StaticValue {
             }
         });
 
-//        addInfoToFile("\n" + new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+        if (savedInstanceState == null) {
+
+
+            addInfoToFile("\n" + new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+
+        }
+
+
     }
 
     /**
