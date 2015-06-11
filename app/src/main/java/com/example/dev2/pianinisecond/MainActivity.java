@@ -108,11 +108,12 @@ public class MainActivity extends Activity implements StaticValue {
             }
         });
 
+        /**
+         *  проверка на то, открывалась ли ранее приложение.
+         *  Если нет, то добавляется дата текущего дня в заголовок логов
+         */
         if (savedInstanceState == null) {
-
-
             addInfoToFile("\n" + new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
-
         }
 
 
